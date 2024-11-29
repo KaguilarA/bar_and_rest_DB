@@ -16,16 +16,18 @@ CREATE TABLE `products` (
     `name` VARCHAR(100) NOT NULL,
     `type` ENUM('bebida botella de vidrio', 'bebida enlatada', 'platillo o boca', 'snack') 
         DEFAULT 'bebida botella de vidrio',
-    `imageUrl` VARCHAR(500) NOT NULL,
+    `image_url` VARCHAR(500),
     `stock` INT UNSIGNED NOT NULL,
     `price` DECIMAL(10, 2) UNSIGNED NOT NULL,
+    `state` BOOLEAN NOT NULL DEFAULT TRUE,
+    `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     INDEX (`name`),
     INDEX (`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `invoices` (
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    `date` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `name` VARCHAR(100) NOT NULL,
     INDEX (`date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
