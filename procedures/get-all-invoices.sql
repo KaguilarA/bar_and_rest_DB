@@ -1,0 +1,8 @@
+DELIMITER $$
+
+CREATE PROCEDURE GetAllInvoices()
+BEGIN
+    SELECT * FROM `invoices`;
+END$$
+
+DELIMITER ;
