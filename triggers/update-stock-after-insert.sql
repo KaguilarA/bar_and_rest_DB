@@ -1,5 +1,7 @@
 DELIMITER $$
 
+DROP TRIGGER IF EXISTS UpdateStockAfterInsert$$
+
 CREATE TRIGGER UpdateStockAfterInsert
 AFTER INSERT ON products_by_invoice
 FOR EACH ROW
