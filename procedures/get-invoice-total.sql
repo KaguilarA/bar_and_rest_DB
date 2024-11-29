@@ -1,5 +1,7 @@
 DELIMITER $$
 
+DROP PROCEDURE IF EXISTS GetInvoiceTotal$$
+
 CREATE PROCEDURE GetInvoiceTotal(IN p_invoice_id INT)
 BEGIN
     DECLARE total DECIMAL(10, 2) DEFAULT 0.00;

@@ -1,5 +1,7 @@
 DELIMITER $$
 
+DROP PROCEDURE IF EXISTS GetInvoiceById$$
+
 CREATE PROCEDURE GetInvoiceById(IN p_id INT)
 BEGIN
     SELECT * FROM `invoices` WHERE `id` = p_id;

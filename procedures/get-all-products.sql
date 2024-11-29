@@ -1,5 +1,7 @@
 DELIMITER $$
 
+DROP PROCEDURE IF EXISTS GetAllProducts$$
+
 CREATE PROCEDURE GetAllProducts()
 BEGIN
     SELECT * FROM `products`;

@@ -1,5 +1,7 @@
 DELIMITER $$
 
+DROP PROCEDURE IF EXISTS CreateUser$$
+
 CREATE PROCEDURE CreateUser(
     IN p_name VARCHAR(100),
     IN p_username VARCHAR(50),

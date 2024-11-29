@@ -1,5 +1,7 @@
 DELIMITER $$
 
+DROP PROCEDURE IF EXISTS CreateInvoice$$
+
 CREATE PROCEDURE CreateInvoice(
     IN p_name VARCHAR(100)
 )

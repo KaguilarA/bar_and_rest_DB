@@ -1,5 +1,7 @@
 DELIMITER $$
 
+DROP PROCEDURE IF EXISTS UpdateUser$$
+
 CREATE PROCEDURE UpdateUser(
     IN p_user_id INT,
     IN p_username VARCHAR(100),

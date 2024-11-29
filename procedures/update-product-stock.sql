@@ -1,5 +1,7 @@
 DELIMITER $$
 
+DROP PROCEDURE IF EXISTS UpdateProductStock$$
+
 CREATE PROCEDURE UpdateProductStock(
     IN p_product_id INT,
     IN p_stock_change INT

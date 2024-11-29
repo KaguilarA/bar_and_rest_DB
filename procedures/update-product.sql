@@ -1,5 +1,7 @@
 DELIMITER $$
 
+DROP PROCEDURE IF EXISTS UpdateProduct$$
+
 CREATE PROCEDURE UpdateProduct(
     IN p_id INT,
     IN p_name VARCHAR(100),
