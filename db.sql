@@ -1,6 +1,10 @@
+DROP DATABASE IF EXISTS `bar_rest`;
+
 CREATE DATABASE `bar_rest` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 USE `bar_rest`;
+
+DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -8,31 +12,41 @@ CREATE TABLE `users` (
     `lastname` VARCHAR(100) NOT NULL,
     `username` VARCHAR(50) NOT NULL UNIQUE,
     `password_hash` VARCHAR(255) NOT NULL,
-    `state` TINYINT UNSIGNED NOT NULL,
+    `state` BOOLEAN NOT NULL DEFAULT TRUE,
     `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    INDEX (`username`)
+    INDEX (`username`),
+    INDEX (`state`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+DROP TABLE IF EXISTS `products`;
 
 CREATE TABLE `products` (
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(100) NOT NULL,
-    `type` ENUM('bebida botella de vidrio', 'bebida enlatada', 'platillo o boca', 'snack') 
-        DEFAULT 'bebida botella de vidrio',
+    `type` ENUM('bebida vidrio', 'bebida enlatada', 'platillo o boca', 'snack') 
+        NOT NULL DEFAULT 'bebida de vidrio',
     `image_url` VARCHAR(500) NOT NULL,
     `stock` INT UNSIGNED NOT NULL,
-    `price` DECIMAL(10, 2) UNSIGNED NOT NULL,
+    `price` INT UNSIGNED NOT NULL,
     `state` BOOLEAN NOT NULL DEFAULT TRUE,
     `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     INDEX (`name`),
-    INDEX (`type`)
+    INDEX (`type`),
+    INDEX (`state`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+DROP TABLE IF EXISTS `invoices`;
 
 CREATE TABLE `invoices` (
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `date` DATETIME NOT NULL,
     `name` VARCHAR(100) NOT NULL,
-    INDEX (`date`)
+    `state` ENUM('pendiente', 'cancelada', 'anulada') NOT NULL DEFAULT 'pendiente',
+    INDEX (`date`),
+    INDEX (`state`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+DROP TABLE IF EXISTS `products_by_invoice`;
 
 CREATE TABLE `products_by_invoice` (
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
