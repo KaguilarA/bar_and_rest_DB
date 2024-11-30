@@ -16,7 +16,7 @@ CREATE TABLE `users` (
     `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     INDEX (`username`),
     INDEX (`state`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `products`;
 
@@ -24,7 +24,7 @@ CREATE TABLE `products` (
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(100) NOT NULL,
     `type` ENUM('bebida vidrio', 'bebida enlatada', 'platillo o boca', 'snack') 
-        NOT NULL DEFAULT 'bebida de vidrio',
+        NOT NULL DEFAULT 'bebida vidrio',
     `image_url` VARCHAR(500) NOT NULL,
     `stock` INT UNSIGNED NOT NULL,
     `price` INT UNSIGNED NOT NULL,

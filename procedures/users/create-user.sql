@@ -14,7 +14,7 @@ BEGIN
         SET MESSAGE_TEXT = 'Username already exists';
     ELSE
         INSERT INTO `users` (`name`, `lastname`, `username`, `password_hash`)
-        VALUES (p_name, p_lastname, p_username, SHA2(p_password_hash, 256));
+        VALUES (p_name, p_lastname, p_username, SHA2(p_password_hash COLLATE utf8mb4_unicode_ci, 256));
     END IF;
 END$$
 
