@@ -5,9 +5,11 @@ USE `bar_rest`;
 CREATE TABLE `users` (
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(100) NOT NULL,
+    `lastname` VARCHAR(100) NOT NULL,
     `username` VARCHAR(50) NOT NULL UNIQUE,
     `password_hash` VARCHAR(255) NOT NULL,
     `state` TINYINT UNSIGNED NOT NULL,
+    `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     INDEX (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -16,7 +18,7 @@ CREATE TABLE `products` (
     `name` VARCHAR(100) NOT NULL,
     `type` ENUM('bebida botella de vidrio', 'bebida enlatada', 'platillo o boca', 'snack') 
         DEFAULT 'bebida botella de vidrio',
-    `image_url` VARCHAR(500),
+    `image_url` VARCHAR(500) NOT NULL,
     `stock` INT UNSIGNED NOT NULL,
     `price` DECIMAL(10, 2) UNSIGNED NOT NULL,
     `state` BOOLEAN NOT NULL DEFAULT TRUE,
