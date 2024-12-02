@@ -33,7 +33,7 @@ CREATE TABLE `products` (
     INDEX (`name`),
     INDEX (`type`),
     INDEX (`state`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `invoices`;
 
@@ -44,7 +44,7 @@ CREATE TABLE `invoices` (
     `state` ENUM('pendiente', 'cancelada', 'anulada') NOT NULL DEFAULT 'pendiente',
     INDEX (`date`),
     INDEX (`state`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `products_by_invoice`;
 
