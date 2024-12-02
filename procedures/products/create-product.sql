@@ -7,7 +7,7 @@ CREATE PROCEDURE CreateProduct(
     IN p_type ENUM('bebida vidrio', 'bebida enlatada', 'platillo o boca', 'snack'),
     IN p_image_url VARCHAR(500),
     IN p_stock INT,
-    IN p_price DECIMAL(10, 2)
+    IN p_price INT
 )
 BEGIN
     INSERT INTO `products` (`name`, `type`, `image_url`, `stock`, `price`)
