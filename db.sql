@@ -26,8 +26,8 @@ CREATE TABLE `products` (
     `type` ENUM('bebida vidrio', 'bebida enlatada', 'platillo o boca', 'snack') 
         NOT NULL DEFAULT 'bebida vidrio',
     `image_url` VARCHAR(500) NOT NULL,
-    `stock` INT UNSIGNED NOT NULL,
-    `price` INT UNSIGNED NOT NULL,
+    `stock` INT UNSIGNED NOT NULL CHECK (`stock` >= 0 AND `stock` <= 10000),
+    `price` INT UNSIGNED NOT NULL CHECK (`price` >= 1 AND `price` <= 1000000),
     `state` BOOLEAN NOT NULL DEFAULT TRUE,
     `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     INDEX (`name`),

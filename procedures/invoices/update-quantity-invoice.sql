@@ -24,9 +24,9 @@ BEGIN
         SET `quantity` = p_new_quantity
         WHERE `invoice_id` = p_invoice_id AND `product_id` = p_product_id;
     ELSE
-        -- Signal an error if the product in the invoice does not exist
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Product in invoice does not exist';
+        -- Insert the product into the invoice if it does not exist
+        INSERT INTO `products_by_invoice` (`invoice_id`, `product_id`, `quantity`)
+        VALUES (p_invoice_id, p_product_id, p_new_quantity);
     END IF;
 END$$
 

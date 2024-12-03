@@ -1,10 +1,15 @@
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS GetProductsByState$$
+-- Drop the procedure if it already exists
+DROP PROCEDURE IF EXISTS GetProductsByType$$
 
-CREATE PROCEDURE GetProductsByState(IN p_state BOOLEAN)
+-- Create a new procedure to get products by type
+CREATE PROCEDURE GetProductsByType(IN p_type VARCHAR(50))
 BEGIN
-    SELECT * FROM `products` WHERE `state` = p_state COLLATE;
+    -- Select products with the specified type
+    SELECT * FROM `products`
+    WHERE 
+        `type` = p_type;
 END$$
 
 DELIMITER ;
