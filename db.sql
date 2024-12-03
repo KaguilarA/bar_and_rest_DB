@@ -39,10 +39,10 @@ DROP TABLE IF EXISTS `invoices`;
 
 CREATE TABLE `invoices` (
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    `date` DATETIME NOT NULL,
+    `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `name` VARCHAR(100) NOT NULL,
     `state` ENUM('pendiente', 'cancelada', 'anulada') NOT NULL DEFAULT 'pendiente',
-    INDEX (`date`),
+    INDEX (`date_created`),
     INDEX (`state`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
