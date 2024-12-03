@@ -7,16 +7,7 @@ DROP PROCEDURE IF EXISTS GetProductsByType$$
 CREATE PROCEDURE GetProductsByType(IN p_type VARCHAR(50))
 BEGIN
     -- Select products with the specified type
-    SELECT 
-        `id`, 
-        `name`, 
-        `type`, 
-        `image_url`, 
-        `stock`, 
-        `price`, 
-        `date_created`
-    FROM 
-        `products`
+    SELECT * FROM `products`
     WHERE 
         `type` = p_type;
 END$$
