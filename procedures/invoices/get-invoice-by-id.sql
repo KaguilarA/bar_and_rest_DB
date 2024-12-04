@@ -8,9 +8,9 @@ CREATE PROCEDURE GetInvoiceById(IN p_invoice_id INT)
 BEGIN
     -- Select the invoice with its products and total amount
     SELECT 
-        i.id AS invoice_id,
-        i.name AS invoice_name,
-        i.date_created AS invoice_date,
+        i.id,
+        i.name,
+        i.date_created,
         (
             -- Subquery to get products associated with the invoice
             SELECT JSON_ARRAYAGG(
