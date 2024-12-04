@@ -15,8 +15,8 @@ BEGIN
             -- Subquery to get products associated with the invoice
             SELECT JSON_ARRAYAGG(
                 JSON_OBJECT(
-                    'product_id', p.id,
-                    'product_name', p.name,
+                    'id', p.id,
+                    'name', p.name,
                     'quantity', pbi.quantity,
                     'price', p.price,
                     'total', p.price * pbi.quantity

@@ -33,7 +33,7 @@ CREATE TABLE `products` (
     `type` ENUM('bebida vidrio', 'bebida enlatada', 'platillo o boca', 'snack') 
         NOT NULL DEFAULT 'bebida vidrio', -- Type of the product with default value
     `image_url` VARCHAR(500) NOT NULL, -- URL of the product image
-    `stock` INT UNSIGNED NOT NULL CHECK (`stock` >= 0 AND `stock` <= 10000), -- Stock of the product with constraints
+    `stock` INT UNSIGNED,
     `price` INT UNSIGNED NOT NULL CHECK (`price` >= 1 AND `price` <= 1000000), -- Price of the product with constraints
     `state` BOOLEAN NOT NULL DEFAULT TRUE, -- State of the product with default value
     `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, -- Date when the product was created
