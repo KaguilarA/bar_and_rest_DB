@@ -10,6 +10,7 @@ CREATE PROCEDURE UpdateProductStock(
 )
 BEGIN
     DECLARE current_stock INT;
+    DECLARE current_date_updated DATETIME CURRENT_TIMESTAMP;
 
     -- Get the current stock of the product
     SELECT `stock` INTO current_stock
@@ -21,6 +22,7 @@ BEGIN
         -- Update the stock of the product
         UPDATE `products`
         SET `stock` = `stock` + p_stock_change
+        SET `date_updated` = current_date_updated
         WHERE `id` = p_product_id;
     ELSE
         -- Signal an error if the new stock level would be negative
