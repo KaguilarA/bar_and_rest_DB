@@ -3,12 +3,12 @@ DELIMITER $$
 -- Drop the trigger if it already exists
 DROP TRIGGER IF EXISTS UpdateStockAfterInsert$$
 
--- Create a new trigger that updates the stock after an insert on products_by_invoice
+-- Create a new trigger that updates the stock after an insert on items_by_invoice
 CREATE TRIGGER UpdateStockAfterInsert
-AFTER INSERT ON products_by_invoice
+AFTER INSERT ON items_by_invoice
 FOR EACH ROW
 BEGIN
-    DECLARE product_type ENUM('bebida vidrio', 'bebida enlatada', 'platillo o boca', 'snack');
+    DECLARE product_type ENUM('bebida vidrio', 'bebida enlatada', 'platillo o boca', 'snack', 'trago');
 
     -- Get the type of the product
     SELECT `type` INTO product_type
