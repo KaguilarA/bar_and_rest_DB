@@ -10,7 +10,7 @@ BEGIN
 
     -- Calculate the total amount of the invoice
     SELECT SUM(P.price * PBI.quantity) INTO total
-    FROM `products_by_invoice` PBI
+    FROM `items_by_invoice` PBI
     JOIN `products` P ON P.id = PBI.product_id
     WHERE PBI.invoice_id = p_invoice_id;
 

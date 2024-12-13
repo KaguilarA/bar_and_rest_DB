@@ -19,8 +19,8 @@ BEGIN
     -- Get the ID of the newly created invoice
     SET invoice_id = LAST_INSERT_ID();
 
-    -- Insert the product into the products_by_invoice table
-    INSERT INTO `products_by_invoice` (`invoice_id`, `product_id`, `quantity`)
+    -- Insert the product into the items_by_invoice table
+    INSERT INTO `items_by_invoice` (`invoice_id`, `product_id`, `quantity`)
     VALUES (invoice_id, p_product_id, p_quantity);
 END$$
 

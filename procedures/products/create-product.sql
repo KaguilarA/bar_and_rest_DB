@@ -6,7 +6,7 @@ DROP PROCEDURE IF EXISTS CreateProduct$$
 -- Create a new procedure to create a new product
 CREATE PROCEDURE CreateProduct(
     IN p_name VARCHAR(100),
-    IN p_type ENUM('bebida vidrio', 'bebida enlatada', 'platillo o boca', 'snack'),
+    IN p_type ENUM('bebida vidrio', 'bebida enlatada', 'platillo o boca', 'snack', 'trago'),
     IN p_image_url VARCHAR(500),
     IN p_stock INT,
     IN p_price INT

@@ -23,14 +23,14 @@ BEGIN
                     'total', p.price * pbi.quantity
                 )
             )
-            FROM products_by_invoice pbi
+            FROM items_by_invoice pbi
             JOIN products p ON pbi.product_id = p.id
             WHERE pbi.invoice_id = i.id
         ) AS products,
         (
             -- Subquery to calculate the total amount of the invoice
             SELECT SUM(p.price * pbi.quantity)
-            FROM products_by_invoice pbi
+            FROM items_by_invoice pbi
             JOIN products p ON pbi.product_id = p.id
             WHERE pbi.invoice_id = i.id
         ) AS total_amount
