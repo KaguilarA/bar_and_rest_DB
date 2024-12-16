@@ -32,10 +32,11 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(100) NOT NULL, -- Full name of the user
+    `lastname` VARCHAR(100) DEFAULT NULL, -- Full name of the user
     `username` VARCHAR(50) NOT NULL UNIQUE, -- Username of the user, must be unique
     `password_hash` VARCHAR(255) NOT NULL, -- Hashed password of the user
-    `state_id` INT UNSIGNED NOT NULL, -- Foreign key to the states table
     `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, -- Date when the user was created
+    `state_id` INT UNSIGNED NOT NULL, -- Foreign key to the states table
     FOREIGN KEY (`state_id`) REFERENCES `states`(`id`),
     INDEX (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -47,19 +48,15 @@ DROP TABLE IF EXISTS `products`;
 CREATE TABLE `products` (
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, -- Primary key with auto-increment
     `name` VARCHAR(100) NOT NULL, -- Name of the product
-    `type_id` INT UNSIGNED NOT NULL, -- Foreign key to the product_types table
     `image_url` TEXT NOT NULL, -- URL of the product image
     `stock` INT UNSIGNED NOT NULL DEFAULT 0, -- Stock of the product
     `price` DECIMAL(10,2) NOT NULL CHECK (`price` >= 0.01 AND `price` <= 1000000.00), -- Price with decimal values
-    `state_id` INT UNSIGNED NOT NULL, -- Foreign key to the states table
     `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, -- Date when the product was created
     `date_updated` DATETIME DEFAULT NULL, -- Date when the product was updated
-    `created_by` INT UNSIGNED DEFAULT NULL, -- User who created this record
-    `updated_by` INT UNSIGNED DEFAULT NULL, -- User who updated this record
+    `state_id` INT UNSIGNED NOT NULL, -- Foreign key to the states table
+    `type_id` INT UNSIGNED NOT NULL, -- Foreign key to the product_types table
     FOREIGN KEY (`type_id`) REFERENCES `product_types`(`id`),
     FOREIGN KEY (`state_id`) REFERENCES `states`(`id`),
-    FOREIGN KEY (`created_by`) REFERENCES `users`(`id`),
-    FOREIGN KEY (`updated_by`) REFERENCES `users`(`id`),
     INDEX (`name`),
     INDEX (`type_id`),
     INDEX (`state_id`),
@@ -79,24 +76,12 @@ CREATE TABLE `promos` (
     `specific_date` DATETIME DEFAULT NULL, -- Specific date when the promo is applicable
     `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, -- Date when the promo was created
     `date_updated` DATETIME DEFAULT NULL, -- Date when the promo was updated
+    `state_id` INT UNSIGNED NOT NULL, -- Foreign key to the states table
+    FOREIGN KEY (`state_id`) REFERENCES `states`(`id`),
     INDEX (`name`),
     INDEX (`days_of_week`),
     INDEX (`specific_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- Drop the products_by_promos table if it already exists
-DROP TABLE IF EXISTS `products_by_promos`;
-
--- Create the products_by_promos table
-CREATE TABLE `products_by_promos` (
-    `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, -- Primary key with auto-increment
-    `promo_id` INT UNSIGNED NOT NULL, -- Foreign key to the promos table
-    `product_id` INT UNSIGNED NOT NULL, -- Foreign key to the products table
-    FOREIGN KEY (`promo_id`) REFERENCES `promos`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    INDEX (`promo_id`),
-    INDEX (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Drop the invoices table if it already exists
 DROP TABLE IF EXISTS `invoices`;
@@ -105,16 +90,26 @@ DROP TABLE IF EXISTS `invoices`;
 CREATE TABLE `invoices` (
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, -- Primary key with auto-increment
     `name` VARCHAR(100) NOT NULL, -- Name of the invoice
-    `state_id` INT UNSIGNED NOT NULL, -- Foreign key to the states table
     `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, -- Date when the invoice was created
-    `created_by` INT UNSIGNED DEFAULT NULL, -- User who created this record
-    `updated_by` INT UNSIGNED DEFAULT NULL, -- User who updated this record
+    `state_id` INT UNSIGNED NOT NULL, -- Foreign key to the states table
     FOREIGN KEY (`state_id`) REFERENCES `states`(`id`),
-    FOREIGN KEY (`created_by`) REFERENCES `users`(`id`),
-    FOREIGN KEY (`updated_by`) REFERENCES `users`(`id`),
     INDEX (`date_created`),
     INDEX (`state_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Drop the products_by_promos table if it already exists
+DROP TABLE IF EXISTS `products_by_promos`;
+
+-- Create the products_by_promos table
+CREATE TABLE `products_by_promos` (
+    `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, -- Primary key with auto-increment
+    `product_id` INT UNSIGNED NOT NULL, -- Foreign key to the products table
+    `promo_id` INT UNSIGNED NOT NULL, -- Foreign key to the promos table
+    FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (`promo_id`) REFERENCES `promos`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    INDEX (`product_id`),
+    INDEX (`promo_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Drop the items_by_invoice table if it already exists
 DROP TABLE IF EXISTS `items_by_invoice`;
@@ -122,11 +117,11 @@ DROP TABLE IF EXISTS `items_by_invoice`;
 -- Create the items_by_invoice table
 CREATE TABLE `items_by_invoice` (
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, -- Primary key with auto-increment
-    `invoice_id` INT UNSIGNED NOT NULL, -- Foreign key to the invoices table
+    `price` DECIMAL(10,2) NOT NULL, -- Price of the item
+    `quantity` INT UNSIGNED NOT NULL, -- Quantity of the item
     `product_id` INT UNSIGNED DEFAULT NULL, -- Foreign key to the products table
     `promo_id` INT UNSIGNED DEFAULT NULL, -- Foreign key to the promos table
-    `quantity` INT UNSIGNED NOT NULL, -- Quantity of the item
-    `price` DECIMAL(10,2) NOT NULL, -- Price of the item
+    `invoice_id` INT UNSIGNED NOT NULL, -- Foreign key to the invoices table
     FOREIGN KEY (`invoice_id`) REFERENCES `invoices`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (`promo_id`) REFERENCES `promos`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
