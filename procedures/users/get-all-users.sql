@@ -3,19 +3,23 @@ DELIMITER $$
 -- Drop the procedure if it already exists
 DROP PROCEDURE IF EXISTS GetAllUsers$$
 
--- Create a new procedure to get a user by ID
+-- Create a new procedure to get all users
 CREATE PROCEDURE GetAllUsers()
 BEGIN
-    -- Select the user with the specified ID
+    -- Select all users with their state information
     SELECT 
-        `id`, 
-        `name`, 
-        `lastname`, 
-        `username`, 
-        `state`, 
-        `date_created`
+        `users`.`id`, 
+        `users`.`name`, 
+        `users`.`lastname`, 
+        `users`.`username`, 
+        `states`.`name` AS `state`, 
+        `users`.`date_created`
     FROM 
-        `users`;
+        `users`
+    INNER JOIN 
+        `states` ON `users`.`state_id` = `states`.`id`
+    ORDER BY 
+        `users`.`date_created` DESC; -- Order the results by the date of creation in descending order
 END$$
 
 DELIMITER ;
