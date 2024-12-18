@@ -3,7 +3,7 @@ DELIMITER $$
 -- Drop the procedure if it already exists
 DROP PROCEDURE IF EXISTS UpdateStateById$$
 
--- Create a new procedure to get a state by ID
+-- Create a new procedure to update a state by ID
 CREATE PROCEDURE UpdateStateById(
     IN p_id INT,
     IN p_name VARCHAR(100)
