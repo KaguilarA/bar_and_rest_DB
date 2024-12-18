@@ -6,15 +6,17 @@ DROP PROCEDURE IF EXISTS CreateProduct$$
 -- Create a new procedure to create a new product
 CREATE PROCEDURE CreateProduct(
     IN p_name VARCHAR(100),
-    IN p_type ENUM('bebida vidrio', 'bebida enlatada', 'platillo o boca', 'snack', 'trago'),
+    IN p_description VARCHAR(255),
     IN p_image_url VARCHAR(500),
     IN p_stock INT,
-    IN p_price INT
+    IN p_price INT,
+    IN p_state_id INT,
+    IN p_type_id INT,
 )
 BEGIN
     -- Insert the new product into the products table
-    INSERT INTO `products` (`name`, `type`, `image_url`, `stock`, `price`)
-    VALUES (p_name, p_type, p_image_url, p_stock, p_price);
+    INSERT INTO `products` (`name`, `description`, `image_url`, `stock`, `price`, `state_id`, `type_id`)|
+    VALUES (p_name, p_description, p_image_url, p_stock, p_price, p_state_id, p_type_id);
 END$$
 
 DELIMITER ;
