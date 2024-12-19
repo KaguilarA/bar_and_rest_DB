@@ -23,7 +23,8 @@ BEGIN
     ELSE
         -- Update the promo's state in the promos table
         UPDATE `promos`
-        SET `state_id` = p_state_id
+        SET `state_id` = p_state_id,
+            `date_updated` = CURRENT_TIMESTAMP
         WHERE `id` = p_promo_id;
     END IF;
 END$$

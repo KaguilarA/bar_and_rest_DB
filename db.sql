@@ -93,6 +93,7 @@ DROP TABLE IF EXISTS `promos`;
 CREATE TABLE `promos` (
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, -- Primary key with auto-increment
     `name` VARCHAR(100) NOT NULL, -- Name of the promo
+    `description` VARCHAR(255) DEFAULT NULL, -- Description of the promo
     `price` DECIMAL(10,2) NOT NULL CHECK (`price` >= 0.01 AND `price` <= 1000000.00), -- Price with decimal values
     `days_of_week` SET('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday') DEFAULT NULL, -- Days of the week when the promo is applicable
     `image_url` TEXT DEFAULT NULL, -- URL of the promo image
