@@ -10,9 +10,9 @@ CREATE PROCEDURE UpdateProduct(
     IN p_description VARCHAR(255),
     IN p_image_url VARCHAR(500),
     IN p_stock INT,
-    IN p_price INT,
+    IN p_price DECIMAL(10,2),
     IN p_state_id INT,
-    IN p_type_id INT,
+    IN p_type_id INT
 )
 BEGIN
     -- Update the product's information in the products table
@@ -24,7 +24,8 @@ BEGIN
         `stock` = p_stock, 
         `price` = p_price, 
         `state_id` = p_state_id, 
-        `type_id` = p_type_id
+        `type_id` = p_type_id,
+        `date_updated` = CURRENT_TIMESTAMP -- Update the date_updated field
     WHERE 
         `id` = p_id;
 END$$
