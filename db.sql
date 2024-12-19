@@ -40,7 +40,8 @@ CREATE TABLE `business_info` (
     `twitter_url` VARCHAR(255) DEFAULT NULL, -- URL of the Twitter page
     `state_id` INT UNSIGNED NOT NULL, -- Foreign key to the states table
     FOREIGN KEY (`state_id`) REFERENCES `states`(`id`),
-    INDEX (`name`) -- Index on the name column
+    INDEX (`name`), -- Index on the name column
+    INDEX (`state_id`) -- Index on the state_id column
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Drop the users table if it already exists
@@ -56,7 +57,8 @@ CREATE TABLE `users` (
     `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, -- Date when the user was created
     `state_id` INT UNSIGNED NOT NULL, -- Foreign key to the states table
     FOREIGN KEY (`state_id`) REFERENCES `states`(`id`),
-    INDEX (`username`) -- Index on the username column
+    INDEX (`username`), -- Index on the username column
+    INDEX (`state_id`) -- Index on the state_id column
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Drop the products table if it already exists
@@ -102,7 +104,8 @@ CREATE TABLE `promos` (
     FOREIGN KEY (`state_id`) REFERENCES `states`(`id`),
     INDEX (`name`), -- Index on the name column
     INDEX (`days_of_week`), -- Index on the days_of_week column
-    INDEX (`specific_date`) -- Index on the specific_date column
+    INDEX (`specific_date`), -- Index on the specific_date column
+    INDEX (`state_id`) -- Index on the state_id column
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Drop the invoices table if it already exists
