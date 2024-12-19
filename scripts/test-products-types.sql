@@ -1,7 +1,7 @@
--- Insert default product types
-INSERT INTO `product_types` (`name`) VALUES
-('bebida vidrio'),
-('bebida enlatada'),
-('platillo o boca'),
-('snack'),
-('trago');
+-- Insert default product types for a bar business
+
+CALL bar_rest.CreateProductType('Bebida vidrio', TRUE);
+CALL bar_rest.CreateProductType('Bebida enlatada', TRUE);
+CALL bar_rest.CreateProductType('Boca', FALSE);
+CALL bar_rest.CreateProductType('Snack', TRUE);
+CALL bar_rest.CreateProductType('Trago', FALSE);
