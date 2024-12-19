@@ -21,8 +21,8 @@ BEGIN
     IF current_stock + p_stock_change >= 0 THEN
         -- Update the stock of the product
         UPDATE `products`
-        SET `stock` = `stock` + p_stock_change
-        SET `date_updated` = current_date_updated
+        SET `stock` = `stock` + p_stock_change,
+            `date_updated` = CURRENT_TIMESTAMP
         WHERE `id` = p_product_id;
     ELSE
         -- Signal an error if the new stock level would be negative

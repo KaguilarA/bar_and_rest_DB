@@ -23,7 +23,8 @@ BEGIN
     ELSE
         -- Update the product's state in the products table
         UPDATE `products`
-        SET `state_id` = p_state_id
+        SET `state_id` = p_state_id,
+            `date_updated` = CURRENT_TIMESTAMP
         WHERE `id` = p_id;
     END IF;
 END$$
