@@ -18,7 +18,8 @@ BEGIN
         `promos`.`date_created` AS promo_date_created, 
         `promos`.`date_updated` AS promo_date_updated,
         GROUP_CONCAT(`products`.`id` ORDER BY `products`.`id` ASC) AS product_ids,
-        GROUP_CONCAT(`products`.`name` ORDER BY `products`.`id` ASC) AS product_names
+        GROUP_CONCAT(`products`.`name` ORDER BY `products`.`id` ASC) AS product_names,
+        GROUP_CONCAT(`products_by_promos`.`quantity` ORDER BY `products`.`id` ASC) AS product_quantities
     FROM 
         `promos`
     INNER JOIN 
@@ -30,7 +31,7 @@ BEGIN
     GROUP BY 
         `promos`.`id`
     ORDER BY 
-        `promos`.`id` ASC; -- Order the results by the id of the promo in ascending order
+        `promos`.`name` ASC; -- Order the results by the name of the promo in ascending order
 END$$
 
 DELIMITER ;

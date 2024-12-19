@@ -18,7 +18,8 @@ BEGIN
         `promos`.`date_created` AS promo_date_created, 
         `promos`.`date_updated` AS promo_date_updated,
         GROUP_CONCAT(`products`.`id` ORDER BY `products`.`id` ASC) AS product_ids,
-        GROUP_CONCAT(`products`.`name` ORDER BY `products`.`id` ASC) AS product_names
+        GROUP_CONCAT(`products`.`name` ORDER BY `products`.`id` ASC) AS product_names,
+        GROUP_CONCAT(`products_by_promos`.`quantity` ORDER BY `products`.`id` ASC) AS product_quantities
     FROM 
         `promos`
     INNER JOIN 
