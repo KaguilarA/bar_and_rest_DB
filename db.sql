@@ -7,14 +7,14 @@ CREATE DATABASE `bar_rest` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 -- Use the newly created database
 USE `bar_rest`;
 
--- Drop the product_types table if it already exists
-DROP TABLE IF EXISTS `product_types`;
+-- Drop the states table if it already exists
+DROP TABLE IF EXISTS `permissions`;
 
--- Create a table for product types
-CREATE TABLE `product_types` (
+-- Create a table for user permissions
+CREATE TABLE `permissions` (
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, -- Primary key with auto-increment
-    `name` VARCHAR(100) NOT NULL UNIQUE, -- Name of the product type, must be unique
-    `has_stock` BOOLEAN DEFAULT TRUE -- Indicates if the product type has stock
+    `name` VARCHAR(50) NOT NULL UNIQUE, -- Name of the roles, must be unique
+    `description` VARCHAR(255) DEFAULT NULL -- Description of the product
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Drop the states table if it already exists
@@ -24,6 +24,18 @@ DROP TABLE IF EXISTS `states`;
 CREATE TABLE `states` (
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, -- Primary key with auto-increment
     `name` VARCHAR(50) NOT NULL UNIQUE -- Name of the state, must be unique
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Drop the product_types table if it already exists
+DROP TABLE IF EXISTS `product_types`;
+
+-- Create a table for product types
+CREATE TABLE `product_types` (
+    `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, -- Primary key with auto-increment
+    `name` VARCHAR(100) NOT NULL UNIQUE, -- Name of the product type, must be unique
+    `has_stock` BOOLEAN DEFAULT TRUE, -- Indicates if the product type has stock
+    `state_id` INT UNSIGNED NOT NULL, -- Foreign key to the states table
+    FOREIGN KEY (`state_id`) REFERENCES `states`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Drop the business table if it already exists
@@ -124,7 +136,21 @@ CREATE TABLE `invoices` (
     INDEX (`state_id`) -- Index on the state_id column
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Drop the products_by_promos table if it already exists
+-- Drop the invoices table if it already exists 
+DROP TABLE IF EXISTS `permissions_by_user`;
+
+-- Create the permissions_by_user table
+CREATE TABLE `permissions_by_user` (
+    `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, -- Primary key with auto-increment
+    `user_id` INT UNSIGNED NOT NULL, -- Foreign key to the users table
+    `permission_id` INT UNSIGNED NOT NULL, -- Foreign key to the permissions table
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (`permission_id`) REFERENCES `permissions`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    INDEX (`user_id`), -- Index on the user_id column
+    INDEX (`permission_id`) -- Index on the permission_id column
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Drop the invoices table if it already exists
 DROP TABLE IF EXISTS `products_by_promos`;
 
 -- Create the products_by_promos table
