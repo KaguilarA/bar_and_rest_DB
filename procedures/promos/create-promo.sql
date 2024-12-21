@@ -15,6 +15,12 @@ CREATE PROCEDURE CreatePromo(
 )
 BEGIN
     DECLARE promo_id INT;
+    DECLARE product_id INT;
+    DECLARE quantity INT;
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE product_cursor CURSOR FOR SELECT value FROM JSON_TABLE(p_product_ids, '$[*]' COLUMNS (value INT PATH '$'));
+    DECLARE quantity_cursor CURSOR FOR SELECT value FROM JSON_TABLE(p_quantities, '$[*]' COLUMNS (value INT PATH '$'));
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 
     -- Insert the new promo into the promos table
     INSERT INTO `promos` (`name`, `price`, `days_of_week`, `specific_date`, `state_id`)
@@ -25,7 +31,22 @@ BEGIN
 
     -- Insert the products associated with the promo into the products_by_promos table
     IF p_product_ids IS NOT NULL AND p_quantities IS NOT NULL THEN
-        CALL AddProductsToPromo(promo_id, p_product_ids, p_quantities);
+        OPEN product_cursor;
+        OPEN quantity_cursor;
+
+        read_loop: LOOP
+            FETCH product_cursor INTO product_id;
+            FETCH quantity_cursor INTO quantity;
+            IF done THEN
+                LEAVE read_loop;
+            END IF;
+
+            INSERT INTO `products_by_promos` (`promo_id`, `product_id`, `quantity`)
+            VALUES (promo_id, product_id, quantity);
+        END LOOP;
+
+        CLOSE product_cursor;
+        CLOSE quantity_cursor;
     END IF;
 END$$
 
