@@ -69,9 +69,12 @@ CREATE TABLE `users` (
     `password_hash` VARCHAR(255) NOT NULL, -- Hashed password of the user
     `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, -- Date when the user was created
     `state_id` INT UNSIGNED NOT NULL, -- Foreign key to the states table
+    `business_id` INT UNSIGNED NOT NULL, -- Foreign key to the business table
     FOREIGN KEY (`state_id`) REFERENCES `states`(`id`),
+    FOREIGN KEY (`business_id`) REFERENCES `business`(`id`),
     INDEX (`username`), -- Index on the username column
-    INDEX (`state_id`) -- Index on the state_id column
+    INDEX (`state_id`), -- Index on the state_id column
+    INDEX (`business_id`) -- Index on the state_id column
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Drop the products table if it already exists
@@ -90,12 +93,19 @@ CREATE TABLE `products` (
     `date_updated` DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP, -- Date when the product was updated
     `state_id` INT UNSIGNED NOT NULL, -- Foreign key to the states table
     `type_id` INT UNSIGNED NOT NULL, -- Foreign key to the product_types table
+    `author_id` INT UNSIGNED NOT NULL, -- Foreign key to the users table
+    `business_id` INT UNSIGNED NOT NULL, -- Foreign key to the business table
     FOREIGN KEY (`type_id`) REFERENCES `product_types`(`id`),
     FOREIGN KEY (`state_id`) REFERENCES `states`(`id`),
+    FOREIGN KEY (`author_id`) REFERENCES `users`(`id`),
+    FOREIGN KEY (`business_id`) REFERENCES `business`(`id`),
     INDEX (`name`), -- Index on the name column
     INDEX (`type_id`), -- Index on the type_id column
     INDEX (`state_id`), -- Index on the state_id column
-    INDEX (`price`) -- Index on the price column
+    INDEX (`price`), -- Index on the price column
+    INDEX (`on_landing`), -- Index on the on_landing column
+    INDEX (`author_id`), -- Index on the author_id column
+    INDEX (`business_id`) -- Index on the state_id column
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Drop the promos table if it already exists
@@ -115,6 +125,8 @@ CREATE TABLE `promos` (
     `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, -- Date when the promo was created
     `date_updated` DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP, -- Date when the promo was updated
     `state_id` INT UNSIGNED NOT NULL, -- Foreign key to the states table
+    `author_id` INT UNSIGNED NOT NULL, -- Foreign key to the users table
+    `business_id` INT UNSIGNED NOT NULL, -- Foreign key to the business table
     FOREIGN KEY (`state_id`) REFERENCES `states`(`id`),
     INDEX (`name`), -- Index on the name column
     INDEX (`days_of_week`), -- Index on the days_of_week column
@@ -131,9 +143,13 @@ CREATE TABLE `invoices` (
     `name` VARCHAR(100) NOT NULL, -- Name of the invoice
     `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, -- Date when the invoice was created
     `state_id` INT UNSIGNED NOT NULL, -- Foreign key to the states table
+    `author_id` INT UNSIGNED NOT NULL, -- Foreign key to the users table
     FOREIGN KEY (`state_id`) REFERENCES `states`(`id`),
+    FOREIGN KEY (`author_id`) REFERENCES `users`(`id`),
+    INDEX (`name`), -- Index on the name column
     INDEX (`date_created`), -- Index on the date_created column
-    INDEX (`state_id`) -- Index on the state_id column
+    INDEX (`state_id`). -- Index on the state_id column
+    INDEX (`author_id`) -- Index on the author_id column
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Drop the invoices table if it already exists 
