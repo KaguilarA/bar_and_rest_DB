@@ -73,6 +73,8 @@ BEGIN
         invoices i
     JOIN 
         states s ON i.state_id = s.id
+    JOIN 
+        users u ON i.author_id = u.id
     ORDER BY 
         i.date_created DESC; -- Order by date created in descending order
 END$$

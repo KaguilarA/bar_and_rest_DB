@@ -73,6 +73,8 @@ BEGIN
         invoices i
     JOIN 
         states s ON i.state_id = s.id
+    JOIN 
+        users u ON i.author_id = u.id
     WHERE 
         i.id = p_invoice_id;
 END$$
