@@ -33,7 +33,9 @@ DROP TABLE IF EXISTS `product_types`;
 CREATE TABLE `product_types` (
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, -- Primary key with auto-increment
     `name` VARCHAR(100) NOT NULL UNIQUE, -- Name of the product type, must be unique
-    `has_stock` BOOLEAN DEFAULT TRUE -- Indicates if the product type has stock
+    `has_stock` BOOLEAN DEFAULT TRUE, -- Indicates if the product type has stock
+    `state_id` INT UNSIGNED NOT NULL, -- Foreign key to the states table
+    FOREIGN KEY (`state_id`) REFERENCES `states`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Drop the business table if it already exists
@@ -67,9 +69,12 @@ CREATE TABLE `users` (
     `password_hash` VARCHAR(255) NOT NULL, -- Hashed password of the user
     `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, -- Date when the user was created
     `state_id` INT UNSIGNED NOT NULL, -- Foreign key to the states table
+    `business_id` INT UNSIGNED NOT NULL, -- Foreign key to the business table
     FOREIGN KEY (`state_id`) REFERENCES `states`(`id`),
+    FOREIGN KEY (`business_id`) REFERENCES `business`(`id`),
     INDEX (`username`), -- Index on the username column
-    INDEX (`state_id`) -- Index on the state_id column
+    INDEX (`state_id`), -- Index on the state_id column
+    INDEX (`business_id`) -- Index on the state_id column
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Drop the products table if it already exists
@@ -89,13 +94,18 @@ CREATE TABLE `products` (
     `state_id` INT UNSIGNED NOT NULL, -- Foreign key to the states table
     `type_id` INT UNSIGNED NOT NULL, -- Foreign key to the product_types table
     `author_id` INT UNSIGNED NOT NULL, -- Foreign key to the users table
+    `business_id` INT UNSIGNED NOT NULL, -- Foreign key to the business table
     FOREIGN KEY (`type_id`) REFERENCES `product_types`(`id`),
     FOREIGN KEY (`state_id`) REFERENCES `states`(`id`),
+    FOREIGN KEY (`author_id`) REFERENCES `users`(`id`),
+    FOREIGN KEY (`business_id`) REFERENCES `business`(`id`),
     INDEX (`name`), -- Index on the name column
     INDEX (`type_id`), -- Index on the type_id column
     INDEX (`state_id`), -- Index on the state_id column
     INDEX (`price`), -- Index on the price column
-    INDEX (`on_landing`) -- Index on the on_landing column
+    INDEX (`on_landing`), -- Index on the on_landing column
+    INDEX (`author_id`), -- Index on the author_id column
+    INDEX (`business_id`) -- Index on the state_id column
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Drop the promos table if it already exists
@@ -110,12 +120,13 @@ CREATE TABLE `promos` (
     `days_of_week` SET('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday') DEFAULT NULL, -- Days of the week when the promo is applicable
     `image_url` TEXT DEFAULT NULL, -- URL of the promo image
     `products_quantity` INT DEFAULT 1, -- URL of the promo image
-    `code` VARCHAR(50) DEFAULT NULL, -- Code of the promo.
     `on_landing` BOOLEAN DEFAULT FALSE, -- Value indicating if the product is on the landing page
     `specific_date` DATETIME DEFAULT NULL, -- Specific date when the promo is applicable
     `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, -- Date when the promo was created
     `date_updated` DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP, -- Date when the promo was updated
     `state_id` INT UNSIGNED NOT NULL, -- Foreign key to the states table
+    `author_id` INT UNSIGNED NOT NULL, -- Foreign key to the users table
+    `business_id` INT UNSIGNED NOT NULL, -- Foreign key to the business table
     FOREIGN KEY (`state_id`) REFERENCES `states`(`id`),
     INDEX (`name`), -- Index on the name column
     INDEX (`days_of_week`), -- Index on the days_of_week column
@@ -153,6 +164,21 @@ CREATE TABLE `permissions_by_user` (
     FOREIGN KEY (`permission_id`) REFERENCES `permissions`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
     INDEX (`user_id`), -- Index on the user_id column
     INDEX (`permission_id`) -- Index on the permission_id column
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Drop the invoices table if it already exists
+DROP TABLE IF EXISTS `products_by_promos`;
+
+-- Create the products_by_promos table
+CREATE TABLE `products_by_promos` (
+    `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, -- Primary key with auto-increment
+    `quantity` INT UNSIGNED NOT NULL, -- Quantity of the item
+    `product_id` INT UNSIGNED NOT NULL, -- Foreign key to the products table
+    `promo_id` INT UNSIGNED NOT NULL, -- Foreign key to the promos table
+    FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (`promo_id`) REFERENCES `promos`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    INDEX (`product_id`), -- Index on the product_id column
+    INDEX (`promo_id`) -- Index on the promo_id column
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Drop the items_by_invoice table if it already exists
