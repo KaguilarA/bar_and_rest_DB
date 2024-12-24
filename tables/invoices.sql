@@ -7,16 +7,15 @@ DROP TABLE IF EXISTS `invoices`;
 CREATE TABLE `invoices` (
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, -- Primary key with auto-increment
     `name` VARCHAR(100) NOT NULL, -- Name of the invoice
-    `state_id` INT UNSIGNED NOT NULL, -- Foreign key to the states table
     `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, -- Date when the invoice was created
-    `created_by` INT UNSIGNED DEFAULT NULL, -- User who created this record
-    `updated_by` INT UNSIGNED DEFAULT NULL, -- User who updated this record
+    `state_id` INT UNSIGNED NOT NULL, -- Foreign key to the states table
+    `author_id` INT UNSIGNED NOT NULL, -- Foreign key to the users table
     FOREIGN KEY (`state_id`) REFERENCES `states`(`id`),
-    FOREIGN KEY (`created_by`) REFERENCES `users`(`id`),
-    FOREIGN KEY (`updated_by`) REFERENCES `users`(`id`),
-    INDEX (`date_created`),
-    INDEX (`name`),
-    INDEX (`state_id`)
+    FOREIGN KEY (`author_id`) REFERENCES `users`(`id`),
+    INDEX (`name`), -- Index on the name column
+    INDEX (`date_created`), -- Index on the date_created column
+    INDEX (`state_id`). -- Index on the state_id column
+    INDEX (`author_id`) -- Index on the author_id column
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DELIMITER ;
