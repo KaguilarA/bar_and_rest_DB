@@ -29,7 +29,7 @@ BEGIN
     -- Get the ID of the newly created promo
     SET promo_id = LAST_INSERT_ID();
 
-    -- Insert the products associated with the promo into the products_by_promos table
+    -- Insert the products associated with the promo into the items_by_promos table
     IF p_product_ids IS NOT NULL AND p_quantities IS NOT NULL THEN
         OPEN product_cursor;
         OPEN quantity_cursor;
@@ -41,7 +41,7 @@ BEGIN
                 LEAVE read_loop;
             END IF;
 
-            INSERT INTO `products_by_promos` (`promo_id`, `product_id`, `quantity`)
+            INSERT INTO `items_by_promos` (`promo_id`, `product_id`, `quantity`)
             VALUES (promo_id, product_id, quantity);
         END LOOP;
 

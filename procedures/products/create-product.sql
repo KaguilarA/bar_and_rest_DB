@@ -11,7 +11,7 @@ CREATE PROCEDURE CreateProduct(
     IN p_stock INT,
     IN p_price INT,
     IN p_state_id INT,
-    IN p_type_id INT,
+    IN p_type_id INT
 )
 BEGIN
     -- Insert the new product into the products table
