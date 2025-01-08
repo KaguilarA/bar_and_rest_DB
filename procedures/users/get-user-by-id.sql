@@ -19,7 +19,7 @@ BEGIN
     INNER JOIN 
         `states` ON `users`.`state_id` = `states`.`id`
     WHERE 
-        `users`.`id` = p_id
+        `users`.`id` = p_id;
 END$$
 
 DELIMITER ;

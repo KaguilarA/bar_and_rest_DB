@@ -9,24 +9,11 @@ CREATE PROCEDURE UpdatePromoState(
     IN p_state_id INT
 )
 BEGIN
-    DECLARE state_exists INT;
-
-    -- Check if the state ID exists in the states table
-    SELECT COUNT(*) INTO state_exists
-    FROM `states`
-    WHERE `id` = p_state_id;
-
-    -- If the state ID does not exist, signal an error
-    IF state_exists = 0 THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Invalid state ID';
-    ELSE
-        -- Update the promo's state in the promos table
-        UPDATE `promos`
-        SET `state_id` = p_state_id,
-            `date_updated` = CURRENT_TIMESTAMP
-        WHERE `id` = p_promo_id;
-    END IF;
+    -- Update the promo's state in the promos table
+    UPDATE `promos`
+    SET `state_id` = p_state_id,
+        `date_updated` = CURRENT_TIMESTAMP
+    WHERE `id` = p_promo_id;
 END$$
 
 DELIMITER ;

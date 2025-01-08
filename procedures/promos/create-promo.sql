@@ -18,8 +18,8 @@ BEGIN
     DECLARE product_id INT;
     DECLARE quantity INT;
     DECLARE done INT DEFAULT FALSE;
-    DECLARE product_cursor CURSOR FOR SELECT value FROM JSON_TABLE(p_product_ids, '$[*]' COLUMNS (value INT PATH '$'));
-    DECLARE quantity_cursor CURSOR FOR SELECT value FROM JSON_TABLE(p_quantities, '$[*]' COLUMNS (value INT PATH '$'));
+    DECLARE product_cursor CURSOR FOR SELECT value FROM JSON_TABLE(p_product_ids, '$[*]' COLUMNS (value INT PATH '$')) AS jt_product;
+    DECLARE quantity_cursor CURSOR FOR SELECT value FROM JSON_TABLE(p_quantities, '$[*]' COLUMNS (value INT PATH '$')) AS jt_quantity;
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 
     -- Insert the new promo into the promos table

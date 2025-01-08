@@ -15,7 +15,7 @@ CREATE PROCEDURE CreateProduct(
 )
 BEGIN
     -- Insert the new product into the products table
-    INSERT INTO `products` (`name`, `description`, `image_url`, `stock`, `price`, `state_id`, `type_id`)|
+    INSERT INTO `products` (`name`, `description`, `image_url`, `stock`, `price`, `state_id`, `type_id`)
     VALUES (p_name, p_description, p_image_url, p_stock, p_price, p_state_id, p_type_id);
 END$$
 

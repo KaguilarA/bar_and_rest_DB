@@ -10,7 +10,6 @@ CREATE PROCEDURE UpdateProductStock(
 )
 BEGIN
     DECLARE current_stock INT;
-    DECLARE current_date_updated DATETIME CURRENT_TIMESTAMP;
 
     -- Get the current stock of the product
     SELECT `stock` INTO current_stock

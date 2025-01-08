@@ -11,9 +11,19 @@ CREATE PROCEDURE UpdatePromoById(
     IN p_days_of_week SET('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'),
     IN p_specific_date DATE,
     IN p_state_id INT,
-    IN p_product_ids JSON
+    IN p_product_ids JSON,
+    IN p_quantities JSON
 )
 BEGIN
+    DECLARE product_id INT;
+    DECLARE quantity INT;
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE product_cursor CURSOR FOR 
+        SELECT value FROM JSON_TABLE(p_product_ids, '$[*]' COLUMNS (value INT PATH '$')) AS jt_product;
+    DECLARE quantity_cursor CURSOR FOR 
+        SELECT value FROM JSON_TABLE(p_quantities, '$[*]' COLUMNS (value INT PATH '$')) AS jt_quantity;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
     -- Update the promo with the specified ID
     UPDATE `promos`
     SET 
@@ -29,25 +39,23 @@ BEGIN
     DELETE FROM `items_by_promos` WHERE `promo_id` = p_id;
 
     -- Insert the new products associated with the promo into the items_by_promos table
-    IF p_product_ids IS NOT NULL THEN
-        DECLARE product_id INT;
-        DECLARE done INT DEFAULT FALSE;
-        DECLARE product_cursor CURSOR FOR SELECT value FROM JSON_TABLE(p_product_ids, '$[*]' COLUMNS (value INT PATH '$'));
-        DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
-
+    IF p_product_ids IS NOT NULL AND p_quantities IS NOT NULL THEN
         OPEN product_cursor;
+        OPEN quantity_cursor;
 
         read_loop: LOOP
             FETCH product_cursor INTO product_id;
+            FETCH quantity_cursor INTO quantity;
             IF done THEN
                 LEAVE read_loop;
             END IF;
 
-            INSERT INTO `items_by_promos` (`promo_id`, `product_id`)
-            VALUES (p_id, product_id);
+            INSERT INTO `items_by_promos` (`promo_id`, `product_id`, `quantity`)
+            VALUES (p_id, product_id, quantity);
         END LOOP;
 
         CLOSE product_cursor;
+        CLOSE quantity_cursor;
     END IF;
 END$$
 

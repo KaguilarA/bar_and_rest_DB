@@ -12,16 +12,9 @@ CREATE PROCEDURE CreateUser(
     IN p_state_id INT UNSIGNED
 )
 BEGIN
-    -- Check if the username already exists
-    IF EXISTS (SELECT 1 FROM `users` WHERE `username` = p_username) THEN
-        -- Signal an error if the username already exists
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'User already exists';
-    ELSE
-        -- Insert the new user into the users table
-        INSERT INTO `users` (`name`, `lastname`, `username`, `state_id`, `password_hash`)
-        VALUES (p_name, p_lastname, p_username, p_state_id, SHA2(p_password, 256));
-    END IF;
+    -- Insert the new user into the users table
+    INSERT INTO `users` (`name`, `lastname`, `username`, `state_id`, `password_hash`)
+    VALUES (p_name, p_lastname, p_username, p_state_id, SHA2(p_password, 256));
 END$$
 
 DELIMITER ;
