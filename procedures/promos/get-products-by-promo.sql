@@ -10,7 +10,7 @@ CREATE PROCEDURE GetProductByPromo(
 BEGIN
     -- Get all products associated with the promo
     SELECT p.id, p.name, p.price, ibp.quantity
-    FROM `items_by_promos` AS ibp
+    FROM `products_by_promos` AS ibp
     JOIN `products` AS p
     ON ibp.product_id = p.id
     WHERE ibp.promo_id = p_promo_id;

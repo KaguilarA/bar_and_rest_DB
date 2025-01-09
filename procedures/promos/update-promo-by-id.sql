@@ -36,26 +36,23 @@ BEGIN
     WHERE `id` = p_id;
 
     -- Delete existing products associated with the promo
-    DELETE FROM `items_by_promos` WHERE `promo_id` = p_id;
+    DELETE FROM `products_by_promos` WHERE `promo_id` = p_id;
 
-    -- Insert the new products associated with the promo into the items_by_promos table
+    -- Insert the new products associated with the promo into the products_by_promos table
     IF p_product_ids IS NOT NULL AND p_quantities IS NOT NULL THEN
         OPEN product_cursor;
-        OPEN quantity_cursor;
 
         read_loop: LOOP
             FETCH product_cursor INTO product_id;
-            FETCH quantity_cursor INTO quantity;
             IF done THEN
                 LEAVE read_loop;
             END IF;
 
-            INSERT INTO `items_by_promos` (`promo_id`, `product_id`, `quantity`)
-            VALUES (p_id, product_id, quantity);
+            INSERT INTO `products_by_promos` (`promo_id`, `product_id`)
+            VALUES (p_id, product_id);
         END LOOP;
 
         CLOSE product_cursor;
-        CLOSE quantity_cursor;
     END IF;
 END$$
 

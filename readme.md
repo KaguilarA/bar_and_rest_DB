@@ -20,7 +20,7 @@ The database schema includes the following tables:
 - `invoices`: Stores invoice information.
 - `items_by_invoice`: Stores the relationship between products and invoices.
 - `promos`: Stores promotion information.
-- `items_by_promos`: Stores the relationship between products and promotions.
+- `products_by_promos`: Stores the relationship between products and promotions.
 - `states`: Stores state information for users, products, and invoices.
 - `product_types`: Stores product type information.
 

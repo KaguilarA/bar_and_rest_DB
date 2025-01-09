@@ -19,15 +19,15 @@ BEGIN
         `promos`.`date_updated` AS promo_date_updated,
         GROUP_CONCAT(`products`.`id` ORDER BY `products`.`id` ASC) AS product_ids,
         GROUP_CONCAT(`products`.`name` ORDER BY `products`.`id` ASC) AS product_names,
-        GROUP_CONCAT(`items_by_promos`.`quantity` ORDER BY `products`.`id` ASC) AS product_quantities
+        GROUP_CONCAT(`products_by_promos`.`quantity` ORDER BY `products`.`id` ASC) AS product_quantities
     FROM 
         `promos`
     INNER JOIN 
         `states` ON `promos`.`state_id` = `states`.`id`
     LEFT JOIN 
-        `items_by_promos` ON `promos`.`id` = `items_by_promos`.`promo_id`
+        `products_by_promos` ON `promos`.`id` = `products_by_promos`.`promo_id`
     LEFT JOIN 
-        `products` ON `items_by_promos`.`product_id` = `products`.`id`
+        `products` ON `products_by_promos`.`product_id` = `products`.`id`
     WHERE 
         `promos`.`id` = p_id
     GROUP BY 

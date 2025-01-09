@@ -14,7 +14,7 @@ BEGIN
     DECLARE cursor_products CURSOR FOR 
         SELECT ibi.product_id, pr.promo_id
         FROM items_by_invoice ibi
-        LEFT JOIN items_by_promos pr ON ibi.product_id = pr.product_id
+        LEFT JOIN products_by_promos pr ON ibi.product_id = pr.product_id
         WHERE ibi.invoice_id = NEW.id;
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 
