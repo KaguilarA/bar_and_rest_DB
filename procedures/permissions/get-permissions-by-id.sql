@@ -14,9 +14,9 @@ BEGIN
         `name`, 
         `description`
     FROM 
-        `permissions`
+        `permissions` p
     WHERE 
-        `id` = p_id;
+        p.`id` = p_id;
 END$$
 
 DELIMITER ;

@@ -10,13 +10,13 @@ BEGIN
     SELECT 
         `promos`.`id` AS `id`, 
         `promos`.`name` AS `name`, 
-        `promos`.`price` AS promo_price, 
-        `promos`.`days_of_week` AS promo_days_of_week, 
-        `promos`.`specific_date` AS promo_specific_date, 
-        `promos`.`image_url` AS promo_image_url, 
-        `states`.`name` AS promo_state, 
-        `promos`.`date_created` AS promo_date_created, 
-        `promos`.`date_updated` AS promo_date_updated,
+        `promos`.`price` AS `price`, 
+        `promos`.`days_of_week` AS `days_of_week`, 
+        `promos`.`specific_date` AS `specific_date`, 
+        `promos`.`image_url` AS `image_url`, 
+        `states`.`name` AS `state`, 
+        `promos`.`date_created` AS `date_created`, 
+        `promos`.`date_updated` AS `date_updated`,
         GROUP_CONCAT(`products`.`id` ORDER BY `products`.`id` ASC) AS product_ids,
         GROUP_CONCAT(`products`.`name` ORDER BY `products`.`id` ASC) AS product_names
     FROM 

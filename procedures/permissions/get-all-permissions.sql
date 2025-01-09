@@ -14,7 +14,7 @@ BEGIN
     FROM 
         `permissions`
     ORDER BY 
-        `name` ASC; -- Order the results by the name of the permission in ascending order
+        `id` ASC; -- Order the results by the name of the permission in ascending order
 END$$
 
 DELIMITER ;

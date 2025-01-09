@@ -14,7 +14,7 @@ BEGIN
         `promos`.`image_url` AS promo_image_url,
         `promos`.`products_quantity` AS promo_products_quantity,
         GROUP_CONCAT(`products`.`id` ORDER BY `products`.`id` ASC) AS product_ids,
-        GROUP_CONCAT(`products`.`name` ORDER BY `products`.`id` ASC) AS product_names,
+        GROUP_CONCAT(`products`.`name` ORDER BY `products`.`id` ASC) AS product_names
     FROM 
         `promos`
     INNER JOIN 
@@ -24,11 +24,9 @@ BEGIN
     LEFT JOIN 
         `products` ON `products_by_promos`.`product_id` = `products`.`id`
     WHERE 
-        `promos`.`on_landing` = TRUE
+        `promos`.`on_landing` = 1
     GROUP BY 
-        `promos`.`id`
-    ORDER BY 
-        `promos`.`name` ASC; -- Order the results by the name of the promo in ascending order
+        `promos`.`id`;
 END$$
 
 DELIMITER ;

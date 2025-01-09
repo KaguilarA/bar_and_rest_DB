@@ -27,7 +27,7 @@ BEGIN
     WHERE 
         `products`.`type_id` = p_type_id
     ORDER BY 
-        `products`.`name` ASC; -- Order the results by the name of the product in ascending order
+        `products`.`id` ASC; -- Order the results by the name of the product in ascending order
 END$$
 
 DELIMITER ;

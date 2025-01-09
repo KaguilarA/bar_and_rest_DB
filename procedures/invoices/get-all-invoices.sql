@@ -11,6 +11,7 @@ BEGIN
         i.id,
         i.name,
         i.date_created,
+        u.name AS author,
         s.name AS state,
         (
             -- Subquery to get products associated with the invoice
@@ -51,7 +52,7 @@ BEGIN
         ) AS total_products,
         (
             -- Subquery to calculate the total amount of the promos in the invoice
-            SELECT SUM(ibi.price * ibi.quantity)
+            SELECT SUM(pr.price * ibi.quantity)
             FROM items_by_invoice ibi
             JOIN promos pr ON ibi.promo_id = pr.id
             WHERE ibi.invoice_id = i.id
