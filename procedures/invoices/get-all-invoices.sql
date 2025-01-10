@@ -11,8 +11,7 @@ BEGIN
         i.id,
         i.name,
         i.date_created,
-        u.name AS author,
-        s.name AS state,
+        s.name AS `state`,
         (
             -- Subquery to get products associated with the invoice
             SELECT JSON_ARRAYAGG(
@@ -74,8 +73,6 @@ BEGIN
         invoices i
     JOIN 
         states s ON i.state_id = s.id
-    JOIN 
-        users u ON i.author_id = u.id
     ORDER BY 
         i.date_created DESC; -- Order by date created in descending order
 END$$

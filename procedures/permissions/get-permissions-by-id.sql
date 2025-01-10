@@ -16,7 +16,9 @@ BEGIN
     FROM 
         `permissions` p
     WHERE 
-        p.`id` = p_id;
+        p.`id` = p_id
+    ORDER BY 
+        p.`id` ASC;
 END$$
 
 DELIMITER ;

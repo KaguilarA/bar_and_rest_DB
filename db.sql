@@ -46,9 +46,10 @@ CREATE TABLE `business` (
     `description` VARCHAR(255) DEFAULT NULL, -- Description of the business
     `email` VARCHAR(100) NOT NULL UNIQUE, -- Email of the business, must be unique
     `phone` VARCHAR(20) NOT NULL, -- Phone number of the business
-    `instagram_url` VARCHAR(255) DEFAULT NULL, -- URL of the Instagram page
-    `facebook_url` VARCHAR(255) DEFAULT NULL, -- URL of the Facebook page
-    `twitter_url` VARCHAR(255) DEFAULT NULL, -- URL of the Twitter page
+    `instagram_url` TEXT DEFAULT NULL, -- URL of the Instagram page
+    `facebook_url` TEXT DEFAULT NULL, -- URL of the Facebook page
+    `whatsapp_url` TEXT DEFAULT NULL, -- URL of the Whatsapp page
+    `twitter_url` TEXT DEFAULT NULL, -- URL of the Twitter page
     `state_id` INT UNSIGNED NOT NULL, -- Foreign key to the states table
     FOREIGN KEY (`state_id`) REFERENCES `states`(`id`),
     INDEX (`name`), -- Index on the name column

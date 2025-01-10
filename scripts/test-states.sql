@@ -1,8 +1,9 @@
 -- Insert default states
 
-CALL bar_rest.CreateState('active');
-CALL bar_rest.CreateState('disabled');
-CALL bar_rest.CreateState('pending');
-CALL bar_rest.CreateState('canceled');
-CALL bar_rest.CreateState('voided');
-CALL bar_rest.CreateState('banned');
+CALL bar_rest.CreateState('activo');
+CALL bar_rest.CreateState('inactivo');
+CALL bar_rest.CreateState('pendiente');
+CALL bar_rest.CreateState('cancelado');
+CALL bar_rest.CreateState('anulado');
+CALL bar_rest.CreateState('agotado');
+CALL bar_rest.CreateState('baneado');
