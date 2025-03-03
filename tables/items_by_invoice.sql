@@ -1,3 +1,6 @@
+-- Use the newly created database
+USE `bar_rest`;
+
 -- Drop the items_by_invoice table if it already exists
 DROP TABLE IF EXISTS `items_by_invoice`;
 

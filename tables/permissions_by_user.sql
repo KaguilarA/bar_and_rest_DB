@@ -1,3 +1,6 @@
+-- Use the newly created database
+USE `bar_rest`;
+
 -- Drop the invoices table if it already exists 
 DROP TABLE IF EXISTS `permissions_by_user`;
 

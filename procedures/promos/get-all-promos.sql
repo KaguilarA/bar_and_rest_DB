@@ -10,6 +10,7 @@ BEGIN
     SELECT 
         `promos`.`id` AS `id`, 
         `promos`.`name` AS `name`, 
+        `promos`.`description` AS `description`, 
         `promos`.`price` AS `price`, 
         `promos`.`days_of_week` AS `days_of_week`, 
         `promos`.`specific_date` AS `specific_date`, 

@@ -10,22 +10,22 @@ CREATE PROCEDURE GetBusinessById(
 BEGIN
     -- Select the business data with the specified ID
     SELECT 
-        `id`,
-        `name`,
-        `description`,
-        `email`,
-        `phone`,
-        `instagram_url`,
-        `facebook_url`,
-        `whatsapp_url`,
-        `twitter_url`,
-        `state_id`,
-        `date_created`,
-        `date_updated`
+        b.id,
+        b.name,
+        b.description,
+        b.email,
+        b.phone,
+        b.instagram_url,
+        b.facebook_url,
+        b.whatsapp_url,
+        b.twitter_url,
+        s.name AS `state`
     FROM 
-        business
+        business b
+    JOIN 
+        states s ON b.state_id = s.id
     WHERE 
-        id = p_id;
+        b.id = p_id;
 END$$
 
 DELIMITER ;

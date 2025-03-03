@@ -1,3 +1,6 @@
+-- Use the newly created database
+USE `bar_rest`;
+
 -- Drop the business table if it already exists
 DROP TABLE IF EXISTS `business`;
 
