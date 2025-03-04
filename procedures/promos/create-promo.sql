@@ -9,7 +9,6 @@ CREATE PROCEDURE CreatePromo(
     IN p_description VARCHAR(255),
     IN p_price DECIMAL(10,2),
     IN p_days_of_week SET('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'),
-    IN p_image_url TEXT,
     IN p_products_quantity INT,
     IN p_specific_date DATE,
     IN p_state_id INT,
@@ -24,8 +23,8 @@ BEGIN
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 
     -- Insert the new promo into the promos table
-    INSERT INTO `promos` (`name`, `description`, `price`, `days_of_week`, `image_url`, `products_quantity`, `specific_date`, `state_id`, `author_id`)
-    VALUES (p_name, p_description, p_price, p_days_of_week, p_image_url, p_products_quantity, p_specific_date, p_state_id, p_author_id);
+    INSERT INTO `promos` (`name`, `description`, `price`, `days_of_week`, `products_quantity`, `specific_date`, `state_id`, `author_id`)
+    VALUES (p_name, p_description, p_price, p_days_of_week, p_products_quantity, p_specific_date, p_state_id, p_author_id);
 
     -- Get the ID of the newly created promo
     SET promo_id = LAST_INSERT_ID();
