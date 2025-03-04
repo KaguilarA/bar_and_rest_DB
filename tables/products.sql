@@ -9,7 +9,6 @@ CREATE TABLE `products` (
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, -- Primary key with auto-increment
     `name` VARCHAR(100) NOT NULL, -- Name of the product
     `description` VARCHAR(255) DEFAULT NULL, -- Description of the product
-    `image_url` TEXT DEFAULT NULL, -- URL of the product image
     `stock` INT UNSIGNED NOT NULL DEFAULT 0, -- Stock of the product
     `price` DECIMAL(10,2) NOT NULL CHECK (`price` >= 0.01 AND `price` <= 1000000.00), -- Price with decimal values
     `on_landing` BOOLEAN DEFAULT FALSE, -- Value indicating if the product is on the landing page
