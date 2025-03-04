@@ -6,6 +6,7 @@ DROP FUNCTION IF EXISTS GetImagesByProductId$$
 -- Create a new function to get images by product ID
 CREATE FUNCTION GetImagesByProductId(p_product_id INT)
 RETURNS JSON
+READS SQL DATA
 BEGIN
     DECLARE images_json JSON;
 
