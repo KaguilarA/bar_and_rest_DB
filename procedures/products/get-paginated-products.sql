@@ -21,26 +21,28 @@ BEGIN
     -- Calcular el OFFSET
     SET v_offset = (p_page - 1) * p_page_size;
 
-    -- Obtener los productos paginados
+    -- Select all products with their type, state, and images information
     SELECT 
-        `products`.`id`, 
-        `products`.`name`, 
-        `products`.`description`, 
-        `products`.`image_url`, 
-        `products`.`stock`, 
-        `products`.`price`, 
-        `product_types`.`name` AS `type`, 
-        `states`.`name` AS `state`, 
-        `products`.`date_created`, 
-        `products`.`date_updated`
+        p.id, 
+        p.name, 
+        p.description, 
+        p.stock, 
+        p.price, 
+        pt.name AS type, 
+        s.name AS state, 
+        p.date_created, 
+        p.date_updated,
+        (
+            SELECT GetImagesByProductId(pi.product_id)
+        ) AS images
     FROM 
-        `products`
+        products p
     INNER JOIN 
-        `product_types` ON `products`.`type_id` = `product_types`.`id`
+        product_types pt ON p.type_id = pt.id
     INNER JOIN 
-        `states` ON `products`.`state_id` = `states`.`id`
+        states s ON p.state_id = s.id
     ORDER BY 
-        `products`.`id` ASC -- Order the results by the name of the product in ascending order
+        p.id ASC -- Order the results by the name of the product in ascending order
     LIMIT p_page_size OFFSET v_offset;
 END$$
 
