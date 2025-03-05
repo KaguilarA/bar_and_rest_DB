@@ -33,7 +33,7 @@ BEGIN
         p.date_created, 
         p.date_updated,
         (
-            SELECT GetImagesByProductId(pi.product_id)
+            SELECT GetImagesByProductId(p.id)
         ) AS images
     FROM 
         products p
