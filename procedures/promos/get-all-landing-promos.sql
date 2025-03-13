@@ -11,7 +11,6 @@ BEGIN
         `promos`.`id` AS promo_id, 
         `promos`.`name` AS promo_name, 
         `promos`.`price` AS promo_price, 
-        `promos`.`image_url` AS promo_image_url,
         `promos`.`products_quantity` AS promo_products_quantity,
         GROUP_CONCAT(`products`.`id` ORDER BY `products`.`id` ASC) AS product_ids,
         GROUP_CONCAT(`products`.`name` ORDER BY `products`.`id` ASC) AS product_names

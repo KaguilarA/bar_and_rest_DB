@@ -14,7 +14,6 @@ BEGIN
         `promos`.`price` AS `price`, 
         `promos`.`days_of_week` AS `days_of_week`, 
         `promos`.`specific_date` AS `specific_date`, 
-        `promos`.`image_url` AS `image_url`, 
         `states`.`name` AS `state`, 
         `promos`.`date_created` AS `date_created`, 
         `promos`.`date_updated` AS `date_updated`,

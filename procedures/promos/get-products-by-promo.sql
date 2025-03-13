@@ -13,7 +13,6 @@ BEGIN
         p.id AS `id`,
         p.name AS `name`,
         p.description AS `description`,
-        p.image_url AS `image_url`,
         pt.name AS `type`,
         s.name AS `state`,
         p.date_created AS `date_created`,
