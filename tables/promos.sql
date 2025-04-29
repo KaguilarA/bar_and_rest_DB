@@ -9,10 +9,9 @@ CREATE TABLE `promos` (
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, -- Primary key with auto-increment
     `name` VARCHAR(100) NOT NULL, -- Name of the promo
     `description` VARCHAR(255) DEFAULT NULL, -- Description of the promo
-    `price` DECIMAL(10,2) NOT NULL CHECK (`price` >= 0.01 AND `price` <= 1000000.00), -- Price with decimal values
     `days_of_week` SET('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday') DEFAULT NULL, -- Days of the week when the promo is applicable
     `products_quantity` INT DEFAULT 1, -- URL of the promo image
-    `on_landing` BOOLEAN DEFAULT FALSE, -- Value indicating if the product is on the landing page
+    `on_landing` BOOLEAN DEFAULT FALSE, -- Value indicating if the promo is on the landing page
     `specific_date` DATETIME DEFAULT NULL, -- Specific date when the promo is applicable
     `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, -- Date when the promo was created
     `date_updated` DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP, -- Date when the promo was updated

@@ -10,7 +10,6 @@ CREATE TABLE `products` (
     `name` VARCHAR(100) NOT NULL, -- Name of the product
     `description` VARCHAR(255) DEFAULT NULL, -- Description of the product
     `stock` INT UNSIGNED NOT NULL DEFAULT 0, -- Stock of the product
-    `price` DECIMAL(10,2) NOT NULL CHECK (`price` >= 0.01 AND `price` <= 1000000.00), -- Price with decimal values
     `on_landing` BOOLEAN DEFAULT FALSE, -- Value indicating if the product is on the landing page
     `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, -- Date when the product was created
     `date_updated` DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP, -- Date when the product was updated
@@ -23,7 +22,5 @@ CREATE TABLE `products` (
     INDEX (`name`), -- Index on the name column
     INDEX (`type_id`), -- Index on the type_id column
     INDEX (`state_id`), -- Index on the state_id column
-    INDEX (`price`), -- Index on the price column
-    INDEX (`on_landing`), -- Index on the on_landing column
     INDEX (`author_id`) -- Index on the author_id column
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
