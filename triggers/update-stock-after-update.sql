@@ -1,22 +1,27 @@
 DELIMITER $$
 
--- Drop the trigger if it already exists
-DROP TRIGGER IF EXISTS UpdateStockAfterUpdateItemByInvoice$$
-
--- Create a new trigger that updates the stock after an update on items_by_invoice
-CREATE TRIGGER UpdateStockAfterUpdateItemByInvoice
-AFTER UPDATE ON items_by_invoice
+CREATE TRIGGER trg_restore_stock_on_cart_item_delete
+AFTER DELETE ON cart_items
 FOR EACH ROW
 BEGIN
-    DECLARE stock_difference INT;
-
-    -- Calculate the difference in quantity between the new and old values
-    SET stock_difference = NEW.quantity - OLD.quantity;
-
-    -- Update the stock for the individual product
+  IF OLD.product_id IS NOT NULL THEN
     UPDATE products
-    SET stock = stock - stock_difference
-    WHERE id = NEW.product_id;
-END$$
+    SET stock = stock + OLD.quantity
+    WHERE id = OLD.product_id;
+  END IF;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER trg_restore_stock_on_cart_promo_product_delete
+AFTER DELETE ON cart_promo_products
+FOR EACH ROW
+BEGIN
+  UPDATE products
+  SET stock = stock + OLD.quantity
+  WHERE id = OLD.product_id;
+END $$
 
 DELIMITER ;
